@@ -1,36 +1,36 @@
 # Zillow Real Estate Data Scraper
 
-## 項目概述
+## Project Overview
 
-這個Python應用程序可以從Zillow克隆網站抓取房地產數據，並自動將收集到的資訊提交到Google表單。該項目演示了使用`requests`、`BeautifulSoup`和`Selenium`進行網頁抓取和自動化表單提交的技術。
+This Python application scrapes real estate data from a Zillow clone website and automatically submits the collected information to a Google Form. The project demonstrates web scraping and automated form submission techniques using `requests`, `BeautifulSoup`, and `Selenium`.
 
-## 功能特點
+## Features
 
-- 從Zillow克隆網站抓取房產價格、地址和連結
-- 使用面向對象方法實現爬蟲和表單提交邏輯
-- 詳細的錯誤處理和日誌記錄
-- 將抓取的數據保存為CSV文件
-- 自動將數據提交到Google表單
-- 可選下載表單回應
+- Scrapes property prices, addresses, and links from a Zillow clone website
+- Implements crawler and form submission logic using an object-oriented approach
+- Detailed error handling and logging
+- Saves scraped data as a CSV file
+- Automatically submits data to a Google Form
+- Optional download of form responses
 
-## 技術棧
+## Technology Stack
 
 - **Python 3.7+**
-- **Requests**: 用於發送HTTP請求
-- **BeautifulSoup4**: 用於HTML解析
-- **Selenium**: 用於瀏覽器自動化和表單提交
-- **Pandas**: 用於數據處理和CSV導出
-- **Logging**: 用於詳細的日誌記錄
+- **Requests**: For sending HTTP requests
+- **BeautifulSoup4**: For HTML parsing
+- **Selenium**: For browser automation and form submission
+- **Pandas**: For data processing and CSV export
+- **Logging**: For detailed logging
 
-## 安裝指南
+## Installation Guide
 
-1. 克隆代碼庫
+1. Clone the repository
    ```bash
    git clone https://github.com/yourusername/zillow-scraper.git
    cd zillow-scraper
    ```
 
-2. 創建並激活虛擬環境
+2. Create and activate a virtual environment
    ```bash
    python -m venv venv
    
@@ -41,28 +41,28 @@
    source venv/bin/activate
    ```
 
-3. 安裝依賴
+3. Install dependencies
    ```bash
    pip install -r requirements.txt
    ```
 
-4. 安裝Chrome瀏覽器和ChromeDriver
+4. Install Chrome browser and ChromeDriver
    
-   確保安裝了Chrome瀏覽器，並下載與Chrome版本匹配的[ChromeDriver](https://sites.google.com/chromium.org/driver/)。
+   Ensure Chrome browser is installed and download the [ChromeDriver](https://sites.google.com/chromium.org/driver/) that matches your Chrome version.
 
-## 使用方法
+## Usage
 
-### 基本用法
+### Basic Usage
 
-運行主腳本開始抓取數據和提交表單：
+Run the main script to start scraping data and submitting forms:
 
 ```bash
 python zillow_scraper.py
 ```
 
-### 配置
+### Configuration
 
-要更改目標URL或表單URL，請在`zillow_scraper.py`文件中修改以下常量：
+To change the target URL or form URL, modify the following constants in the `zillow_scraper.py` file:
 
 ```python
 ZILLOW_CLONE_URL = "https://appbrewery.github.io/Zillow-Clone/"
@@ -70,63 +70,63 @@ GOOGLE_FORM_URL = "https://forms.gle/z4JvQZx8jTBDzMpw8"
 RESPONSES_URL = "https://docs.google.com/forms/d/1tSK6EafVovJYyUxPo4tGAGosrzZtcElg7V6d5-Z0Z0g/edit?pli=1#responses"
 ```
 
-### 以無頭模式運行
+### Running in Headless Mode
 
-如果您希望在沒有可見瀏覽器窗口的情況下運行程序，可以修改`GoogleFormSubmitter`類的初始化：
+If you want to run the program without a visible browser window, you can modify the initialization of the `GoogleFormSubmitter` class:
 
 ```python
 submitter = GoogleFormSubmitter(GOOGLE_FORM_URL, headless=True)
 ```
 
-## 代碼結構
+## Code Structure
 
-### 主要類
+### Main Classes
 
-1. **PropertyScraper**: 負責從網站抓取和解析房產數據
-   - `fetch_page()`: 獲取目標網頁的HTML內容
-   - `parse_properties()`: 從HTML中解析房產數據
-   - `save_to_csv()`: 將抓取的數據保存為CSV
-   - `scrape()`: 執行完整的抓取過程
+1. **PropertyScraper**: Responsible for scraping and parsing property data from websites
+   - `fetch_page()`: Gets the HTML content of the target webpage
+   - `parse_properties()`: Parses property data from HTML
+   - `save_to_csv()`: Saves the scraped data as a CSV
+   - `scrape()`: Performs the complete scraping process
 
-2. **GoogleFormSubmitter**: 負責將數據提交到Google表單
-   - `setup_driver()`: 設置Selenium WebDriver
-   - `submit_property()`: 提交單個房產數據
-   - `submit_all_properties()`: 提交所有房產數據
-   - 實現了上下文管理器接口（`__enter__`和`__exit__`）
+2. **GoogleFormSubmitter**: Responsible for submitting data to Google Forms
+   - `setup_driver()`: Sets up the Selenium WebDriver
+   - `submit_property()`: Submits a single property's data
+   - `submit_all_properties()`: Submits all property data
+   - Implements the context manager interface (`__enter__` and `__exit__`)
 
-### 輔助功能
+### Helper Functions
 
-- `download_responses()`: 從Google表單下載回應數據
-- `main()`: 協調整個程序的執行流程
+- `download_responses()`: Downloads response data from Google Forms
+- `main()`: Coordinates the execution flow of the entire program
 
-## 錯誤處理
+## Error Handling
 
-本程序實現了全面的錯誤處理機制：
+This program implements a comprehensive error handling mechanism:
 
-1. **網絡請求錯誤**：處理連接超時、404和5XX等HTTP錯誤
-2. **解析錯誤**：當HTML結構變化時優雅地處理
-3. **Selenium錯誤**：處理元素未找到、等待超時等問題
-4. **重試機制**：表單提交失敗時自動重試
-5. **詳細日誌**：記錄執行過程中的所有關鍵事件
+1. **Network Request Errors**: Handles connection timeouts, 404s, and 5XX HTTP errors
+2. **Parsing Errors**: Gracefully handles when HTML structure changes
+3. **Selenium Errors**: Handles element not found, wait timeouts, and other issues
+4. **Retry Mechanism**: Automatically retries when form submission fails
+5. **Detailed Logging**: Records all key events during execution
 
-## 日誌記錄
+## Logging
 
-所有操作都記錄在`zillow_scraper.log`文件中，同時顯示在控制台。日誌包括：
+All operations are logged in the `zillow_scraper.log` file and displayed in the console. Logs include:
 
-- 信息級別：常規操作和進度報告
-- 警告級別：非致命問題和潛在問題
-- 錯誤級別：需要注意的操作失敗
+- Info level: Regular operations and progress reports
+- Warning level: Non-fatal issues and potential problems
+- Error level: Operation failures that need attention
 
-## 改進計劃
+## Improvement Plans
 
-1. 添加命令行參數以自定義爬蟲行為
-2. 實現代理IP輪換以避免被阻止
-3. 添加更多數據驗證和清理步驟
-4. 創建Web界面以便更容易使用
-5. 添加單元測試和集成測試
-6. 實現更強大的反反爬蟲措施
+1. Add command-line arguments to customize crawler behavior
+2. Implement proxy IP rotation to avoid being blocked
+3. Add more data validation and cleaning steps
+4. Create a web interface for easier use
+5. Add unit tests and integration tests
+6. Implement more robust anti-anti-scraping measures
 
-## 依賴清單
+## Dependencies
 
 ```
 requests==2.31.0
@@ -135,10 +135,10 @@ selenium==4.15.2
 pandas==2.1.1
 ```
 
-## 許可
+## License
 
-MIT許可證
+MIT License
 
-## 作者
+## Author
 
 Your Name
